@@ -1,36 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import useFetch from "../hooks/useFetch";
 
 function Details() {
-  const [book, setBook] = useState();
-  const [error, setError] = useState({
-    error: false,
-    message: "",
-  });
   const { id } = useParams();
-
-  useEffect(() => {
-    fetch("/book/" + id)
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        } else {
-          return response.json();
-        }
-      })
-      .then(({ data }) => setBook(data))
-      .catch((error) => {
-        setError({
-          error: true,
-          message: error.message,
-        });
-        setBook();
-      });
-  }, []);
+  const [book, loading, error] = useFetch("/books/" + id);
 
   function deleteBook() {
-    fetch("/book/" + id, { method: "DELETE" })
+    fetch("/books/" + id, { method: "DELETE" })
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -48,7 +26,7 @@ function Details() {
 
   return (
     <MainWrapper>
-      {error.error && <div>An error occured: {error.message}</div>}
+      {error && <div>An error occured: {error.message}</div>}
       {book && (
         <section>
           <h2>{book.title}</h2>

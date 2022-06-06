@@ -10,7 +10,7 @@ function AddPage() {
     }),
   };
   function postBook() {
-    fetch("/book", requestOptions)
+    fetch("/books", requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import useFetch from "../hooks/useFetch";
 
 export default function Home() {
-  const [books, loading, error] = useFetch("/book");
+  const [books, loading, error] = useFetch("/books");
 
   return (
     <MainWrapper>
